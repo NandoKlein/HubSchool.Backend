@@ -1,0 +1,6 @@
+@HubSchool_HostAddress = http://localhost:5037
+
+GET {{HubSchool_HostAddress}}/swagger-ui/index.html
+Accept: text/html
+
+###
