@@ -8,6 +8,8 @@ namespace HubSchool.Model.Context
         public MSSQLContext(DbContextOptions<MSSQLContext> options)
             : base(options) { }
 
-        public DbSet<Aluno> Alunos { get; set; }      
+        public DbSet<Aluno> Alunos { get; set; }
+        public DbSet<Professor> Professores { get; set; }
+        public DbSet<Professor> Turmas { get; set; }
     }
 }

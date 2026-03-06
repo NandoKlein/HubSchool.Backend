@@ -20,11 +20,14 @@ namespace HubSchool.Services.Impl
         }
         public List<AlunoDTO> FindAll() => _converter.ParseList(_repository.FindAll());
 
+        public int Count() => _repository.Count();
+
         public AlunoDTO FindById(long id) => _converter.Parse(_repository.FindById(id));
 
         public AlunoDTO Create(AlunoDTO aluno)
         {
             var entity = _converter.Parse(aluno);
+            entity.Login = entity.Email;
             entity = _repository.Create(entity);
             return _converter.Parse(entity);
         }
@@ -37,5 +40,7 @@ namespace HubSchool.Services.Impl
         }
 
         public void Delete(long id) => _repository.Delete(id);
+
+        public bool Login(string login, string senha) => _repository.Login(login, senha);
     }
 }

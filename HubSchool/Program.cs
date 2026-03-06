@@ -21,6 +21,8 @@ builder.Services.AddDatabaseConfiguration(builder.Configuration);
 builder.Services.AddEvolveConfiguration(builder.Configuration, builder.Environment);
 
 builder.Services.AddScoped<IAlunoServices, AlunoServicesImpl>();
+builder.Services.AddScoped<IProfessorServices, ProfessorServicesImpl>();
+builder.Services.AddScoped<ITurmaServices, TurmaServicesImpl>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 

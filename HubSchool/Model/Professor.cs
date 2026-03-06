@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HubSchool.Model
 {
-    [Table("aluno")]
-    public class Aluno : BaseEntity
+    [Table("professor")]
+    public class Professor : BaseEntity
     {
         [Required]
         [Column("name", TypeName = "varchar(80)")]
@@ -18,11 +18,6 @@ namespace HubSchool.Model
         public string Email { get; set; }
        
         [Required]
-        [Column("matricula", TypeName = "bigint")]
-        [MaxLength(80)]
-        public long Matricula {  get; set; }
-       
-        [Required]
         [Column("address", TypeName = "varchar(100)")]
         [MaxLength(100)]
         public string Address { get; set; }
@@ -30,15 +25,15 @@ namespace HubSchool.Model
         [Required]
         [Column("birthday", TypeName = "datetime2(6)")]
         public DateTime? Birthday { get; set; }
-      
+     
+
         [Required]
         [Column("phone", TypeName = "varchar(80)")]
         [MaxLength(20)]
         public string Phone { get; set; }
 
         [Required]
-        [Column("dataDaMatricula", TypeName = "datetime2(6)")]
-        public DateTime? DataDaMatricula { get; set; }
-
+        [Column("dataDaContratacao", TypeName = "datetime2(6)")]
+        public DateTime? DataDaContratacao { get; set; }
     }
 }

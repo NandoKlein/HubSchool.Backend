@@ -23,8 +23,18 @@ namespace HubSchool.Controllers
         [ProducesResponseType(401)]
         public IActionResult Get()
         {
-            _logger.LogInformation("Fetching all people.");
+            _logger.LogInformation("Buscando todos os alunos.");
             return Ok(_alunoService.FindAll());
+        }
+
+        [HttpGet("count")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public IActionResult GetCount()
+        {
+            _logger.LogInformation("Buscando a quantidade de alunos.");
+            return Ok(_alunoService.Count());
         }
 
         [HttpGet("{id}")]
@@ -33,11 +43,11 @@ namespace HubSchool.Controllers
         [ProducesResponseType(401)]
         public IActionResult Get(long id)
         {
-            _logger.LogInformation("Fetching person with Id {id}.", id);
+            _logger.LogInformation("Buscando aluno de Id {id}.", id);
             var aluno = _alunoService.FindById(id);
             if (aluno == null)
             {
-                _logger.LogWarning("Person with Id {id} not found", id);
+                _logger.LogWarning("Aluno de Id {id} não encontrado", id);
                 return NotFound();
             }
             return Ok(aluno);
@@ -49,14 +59,14 @@ namespace HubSchool.Controllers
         [ProducesResponseType(401)]
         public IActionResult Post([FromBody] AlunoDTO aluno)
         {
-            _logger.LogInformation("Creating new person: {firstName}.", aluno.Name);
-            var createdAluno = _alunoService.Create(aluno);
-            if (createdAluno == null)
+            _logger.LogInformation("Cadastrando novo aluno: {name}.", aluno.Name);
+            var novoAluno = _alunoService.Create(aluno);
+            if (novoAluno == null)
             {
-                _logger.LogError("Failed to create person with name {firstName}", aluno.Name);
+                _logger.LogError("Falha ao cadastrar aluno de nome {name}", aluno.Name);
                 return NotFound();
             }
-            return Ok(createdAluno);
+            return Ok(novoAluno);
         }
 
         [HttpPut]
@@ -65,15 +75,15 @@ namespace HubSchool.Controllers
         [ProducesResponseType(401)]
         public IActionResult Put([FromBody] AlunoDTO aluno)
         {
-            _logger.LogInformation("Updating person with Id {id}.", aluno.Id);
-            var createdAluno = _alunoService.Update(aluno);
-            if (createdAluno == null)
+            _logger.LogInformation("Atualizando aluno de Id {id}.", aluno.Id);
+            var novoAluno = _alunoService.Update(aluno);
+            if (novoAluno == null)
             {
-                _logger.LogError("Failed to update person with Id {id} not found", aluno.Id);
+                _logger.LogError("Falha ao atualizar aluno de Id {id}, não encontrado.", aluno.Id);
                 return NotFound();
             }
-            _logger.LogDebug("Person updated successfully: {firstName} ", createdAluno.Name);
-            return Ok(createdAluno);
+            _logger.LogDebug("Aluno atualizado com sucesso: {name} ", novoAluno.Name);
+            return Ok(novoAluno);
         }
 
         [HttpDelete("{id}")]
@@ -82,9 +92,9 @@ namespace HubSchool.Controllers
         [ProducesResponseType(401)]
         public IActionResult Delete(long id)
         {
-            _logger.LogInformation("Deleting person with Id {id}.", id);
+            _logger.LogInformation("Deletando aluno de Id {id}.", id);
             _alunoService.Delete(id);
-            _logger.LogDebug("Person with Id {id} deleted successfully ", id);
+            _logger.LogDebug("Aluno com Id {id} deletado com sucesso. ", id);
             return NoContent();
         }
     

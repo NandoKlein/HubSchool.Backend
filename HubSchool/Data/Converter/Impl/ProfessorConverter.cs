@@ -4,52 +4,51 @@ using HubSchool.Model;
 
 namespace HubSchool.Data.Converter.Impl
 {
-    public class AlunoConverter : IParser<AlunoDTO, Aluno>, IParser<Aluno, AlunoDTO>
+    public class ProfessorConverter : IParser<ProfessorDTO, Professor>, IParser<Professor, ProfessorDTO>
     {
-        public Aluno Parse(AlunoDTO origin)
+        public Professor Parse(ProfessorDTO origin)
         {
             if (origin == null) return null;
-            return new Aluno
+            return new Professor
             {
                 Id = origin.Id,
-                Matricula = origin.Matricula,
                 Name = origin.Name,
                 Login = origin.Login,
                 Senha = origin.Senha,
                 Address = origin.Address,
                 Birthday = origin.Birthday,
+                DataDaContratacao = origin.DataDaContratacao,
                 Email = origin.Email,
-                Phone = origin.Phone,
-                DataDaMatricula = DateTime.Now
+                Phone = origin.Phone
+
             };
         }
 
-        public AlunoDTO Parse(Aluno origin)
+        public ProfessorDTO Parse(Professor origin)
         {
             if (origin == null) return null;
-            return new AlunoDTO
+            return new ProfessorDTO
             {
                 Id = origin.Id,
-                Matricula = origin.Matricula,
                 Name = origin.Name,
                 Login = origin.Login,
                 Senha = origin.Senha,
                 Address = origin.Address,
                 Birthday = origin.Birthday,
+                DataDaContratacao = origin.DataDaContratacao,
                 Email = origin.Email,
-                Phone = origin.Phone,
-                DataDaMatricula = origin.DataDaMatricula
-            };
+                Phone = origin.Phone
 
+            };
         }
-        public List<Aluno> ParseList(List<AlunoDTO> origin)
+
+        public List<Professor> ParseList(List<ProfessorDTO> origin)
         {
             if (origin == null) return null;
             return origin.Select(item => Parse(item)).ToList();
         }
 
-
-        public List<AlunoDTO> ParseList(List<Aluno> origin)
+        public List<ProfessorDTO> ParseList(List<Professor> origin)
         {
             if (origin == null) return null;
             return origin.Select(item => Parse(item)).ToList();

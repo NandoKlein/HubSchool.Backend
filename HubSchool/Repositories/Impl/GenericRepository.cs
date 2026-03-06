@@ -18,6 +18,8 @@ namespace HubSchool.Repositories.Impl
 
         public List<T> FindAll() => _dataset.ToList();
 
+        public int Count() => _dataset.Count();
+
         public T FindById(long id) => _dataset.Find(id);
 
         public T Create(T item)
@@ -44,6 +46,14 @@ namespace HubSchool.Repositories.Impl
             _context.Remove(existingItem);
             _context.SaveChanges();
 
+        }
+
+        public bool Login(string login, string senha)
+        {
+            var existingItem = _dataset.FirstOrDefault(cadastro => cadastro.Login == login);
+            if (existingItem == null) return false;
+            if (existingItem.Senha != senha) return false;
+            return true;
         }
 
         public bool Exists(long id) => _dataset.Any(item => item.Id == id);

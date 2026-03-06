@@ -36,7 +36,7 @@ namespace HubSchool.Configurations
                 evolveConnection,
                 msg => Log.Information(msg))
             {
-                Locations = new List<string> { "db/migrations" },
+                Locations = new List<string> { "db/migrations", "db/dataset" },
                 IsEraseDisabled = true
             };
             evolve.Migrate();

@@ -7,7 +7,10 @@ namespace HubSchool.Services
         AlunoDTO Create(AlunoDTO alunoDTO);
         AlunoDTO FindById(long id);
         List<AlunoDTO> FindAll();
+        int Count();
         AlunoDTO Update(AlunoDTO aluno);
         void Delete(long id);
+        bool Login(string login, string senha);
+
     }
 }
