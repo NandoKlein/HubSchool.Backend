@@ -1,4 +1,5 @@
 ﻿using HubSchool.Data.Dto;
+using HubSchool.Model;
 
 namespace HubSchool.Services
 {
@@ -10,6 +11,8 @@ namespace HubSchool.Services
         int Count();
         ProfessorDTO Update(ProfessorDTO professor);
         void Delete(long id);
-        bool Login(string login, string senha);
+        ProfessorDTO Login(string login, string senha);
+        void AtualizarFoto(long id, string url);
+        void PreservaFotoExistente(Professor entity);
     }
 }

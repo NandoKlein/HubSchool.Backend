@@ -19,7 +19,8 @@ namespace HubSchool.Data.Converter.Impl
                 Birthday = origin.Birthday,
                 DataDaContratacao = origin.DataDaContratacao,
                 Email = origin.Email,
-                Phone = origin.Phone
+                Phone = origin.Phone,
+                Foto = origin.Foto
 
             };
         }
@@ -37,7 +38,8 @@ namespace HubSchool.Data.Converter.Impl
                 Birthday = origin.Birthday,
                 DataDaContratacao = origin.DataDaContratacao,
                 Email = origin.Email,
-                Phone = origin.Phone
+                Phone = origin.Phone,
+                Foto = origin.Foto
 
             };
         }

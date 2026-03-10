@@ -12,8 +12,9 @@ namespace HubSchool.Data.Converter.Impl
             return new Turma
             {
                 Id = origin.Id,
-                Alunos = origin.Alunos,
-                Professor = origin.Professor,
+                Name = origin.Name,
+                IdProfessor = origin.IdProfessor,
+                IdAlunos = origin.IdAlunos
 
             };
         }
@@ -24,9 +25,9 @@ namespace HubSchool.Data.Converter.Impl
             return new TurmaDTO
             {
                 Id = origin.Id,
-                Alunos = origin.Alunos,
-                Professor = origin.Professor,
-
+                Name = origin.Name,
+                IdProfessor = origin.IdProfessor,
+                IdAlunos = origin.IdAlunos
             };
         }
 

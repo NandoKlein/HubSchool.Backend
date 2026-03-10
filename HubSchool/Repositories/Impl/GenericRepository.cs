@@ -46,16 +46,15 @@ namespace HubSchool.Repositories.Impl
             _context.Remove(existingItem);
             _context.SaveChanges();
 
-        }
-
-        public bool Login(string login, string senha)
-        {
-            var existingItem = _dataset.FirstOrDefault(cadastro => cadastro.Login == login);
-            if (existingItem == null) return false;
-            if (existingItem.Senha != senha) return false;
-            return true;
-        }
-
+        }       
         public bool Exists(long id) => _dataset.Any(item => item.Id == id);
+
+        public void AtualizarFoto(long id, string url)
+        {
+            var existingItem = _dataset.Find(id);
+            if (existingItem == null) return;
+            _context.Entry(existingItem).Property("Foto").CurrentValue = url;
+            _context.SaveChanges();
+        }
     }
 }

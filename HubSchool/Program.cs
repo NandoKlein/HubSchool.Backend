@@ -23,13 +23,21 @@ builder.Services.AddEvolveConfiguration(builder.Configuration, builder.Environme
 builder.Services.AddScoped<IAlunoServices, AlunoServicesImpl>();
 builder.Services.AddScoped<IProfessorServices, ProfessorServicesImpl>();
 builder.Services.AddScoped<ITurmaServices, TurmaServicesImpl>();
+builder.Services.AddScoped<IAulaServices, AulaServicesImpl>();
+builder.Services.AddScoped<IHomeworkServices, HomeworkServicesImpl>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped(typeof(IAuteticadorRepository<>), typeof(AuteticadorRepository<>));
+builder.Services.AddScoped<ITurmaAlunosRepository, TurmaAlunosRepository>();
+builder.Services.AddScoped<IFrequenciaRepository, FrequenciaRepository>();
+builder.Services.AddScoped<IHomeworkRepository, HomeworkRepository>();
+
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
+app.UseStaticFiles();
 app.UseAuthorization();
 app.UseCorsConfiguration(builder.Configuration);
 

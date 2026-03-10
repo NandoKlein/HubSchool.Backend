@@ -1,4 +1,6 @@
-﻿namespace HubSchool.Data.Dto
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace HubSchool.Data.Dto
 {
     public class AlunoDTO
     {
@@ -12,6 +14,7 @@
         public DateTime? Birthday { get; set; }               
         public string Email { get; set; }        
         public string Phone { get; set; }
-        public DateTime? DataDaMatricula { get; set; }
+        public DateTime? DataDaMatricula { get; set; }     
+        public string? Foto { get; set; }
     }
 }

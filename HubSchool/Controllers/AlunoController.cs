@@ -11,10 +11,13 @@ namespace HubSchool.Controllers
     {
         private readonly IAlunoServices _alunoService;
         private readonly ILogger<AlunoController> _logger;
-        public AlunoController(IAlunoServices sevice, ILogger<AlunoController> logger)
+        private readonly IWebHostEnvironment _env;
+
+        public AlunoController(IAlunoServices sevice, ILogger<AlunoController> logger, IWebHostEnvironment env)
         {
             _alunoService = sevice;
             _logger = logger;
+            _env = env;
         }
 
         [HttpGet]
@@ -96,6 +99,26 @@ namespace HubSchool.Controllers
             _alunoService.Delete(id);
             _logger.LogDebug("Aluno com Id {id} deletado com sucesso. ", id);
             return NoContent();
+        }
+
+        [HttpPost("{id}/foto")]
+        public async Task<IActionResult> UploadFoto(long id, IFormFile foto)
+        {
+            if (foto == null || foto.Length == 0)
+                return BadRequest("Nenhum arquivo enviado.");
+            var extensao = Path.GetExtension(foto.FileName);
+            var nomeArquivo = $"{id}{extensao}";
+            var webRoot = _env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var caminho = Path.Combine(webRoot, "uploads", "alunos", nomeArquivo);
+
+            Directory.CreateDirectory(Path.GetDirectoryName(caminho));
+            using (var stream = new FileStream(caminho, FileMode.Create))
+                await foto.CopyToAsync(stream);
+
+            var url = $"/uploads/alunos/{nomeArquivo}";
+            _alunoService.AtualizarFoto(id, url);
+
+            return Ok(new { url });
         }
     
     }

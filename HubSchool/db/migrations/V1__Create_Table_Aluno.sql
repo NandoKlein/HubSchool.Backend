@@ -8,7 +8,8 @@ CREATE TABLE dbo.aluno(
 	[birthday] DATETIME2(6) NOT NULL,
 	[email] varchar(80) NOT NULL,
 	[phone] varchar(80) NOT NULL,
-	[dataDaMatricula] DATETIME2(6) NOT NULL
+	[dataDaMatricula] DATETIME2(6) NOT NULL,
+	[foto] varchar(200)
 PRIMARY KEY ([id]))
 
 CREATE TABLE dbo.professor(
@@ -20,12 +21,45 @@ CREATE TABLE dbo.professor(
 	[birthday] DATETIME2(6) NOT NULL,
 	[email] varchar(80) NOT NULL,
 	[phone] varchar(80) NOT NULL,
-	[dataDaContratacao] DATETIME2(6) NOT NULL
+	[dataDaContratacao] DATETIME2(6) NOT NULL,
+	[foto] varchar(200)
 PRIMARY KEY ([id]))
 
 CREATE TABLE dbo.turma(
 	[id] bigint NOT NULL IDENTITY ,	
 	[name] varchar(80) NOT NULL,
-	[codProfessor] bigint NOT NULL,	
-	[codAluno] bigint NOT NULL  	
+	[idProfessor] bigint NOT NULL			
 PRIMARY KEY ([id]))
+
+CREATE TABLE dbo.turmaAlunos(
+	[idTurma] bigint NOT NULL,	
+	[idAluno] bigint NOT NULL,
+	PRIMARY KEY ([idTurma], [idAluno]))
+
+	CREATE TABLE dbo.aula(
+	[id] bigint NOT NULL IDENTITY ,	
+	[idTurma] bigint NOT NULL,
+	[idProfessor] bigint NOT NULL,	
+	[capitulo]  int NOT NULL,
+	[statusAula]  int NOT NULL,
+	[resumo] varchar(1000) NOT NULL,	
+	[dataDaAula] DATETIME2(6) NOT NULL
+PRIMARY KEY ([id]))
+
+CREATE TABLE dbo.frequencia(
+	[idAula] bigint NOT NULL,	
+	[idAluno] bigint NOT NULL,
+	[presenca] int NOT NULL
+	PRIMARY KEY ([idAula], [idAluno]))
+
+	CREATE TABLE dbo.homework(
+	[idAula] bigint NOT NULL,	
+	[idAluno] bigint NOT NULL,
+	[idProfessor] bigint NOT NULL,	
+	[statusHomework] int NOT NULL,
+	[nota] bigint,
+	[comentario] varchar(1000),
+	[arquivo] varchar(200),
+	[prazoDeEntrega] DATETIME2(6)
+	PRIMARY KEY ([idAula], [idAluno]))
+	                           

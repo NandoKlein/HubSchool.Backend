@@ -6,28 +6,45 @@ using System;
 
 namespace HubSchool.Services.Impl
 {
-    public class TurmaServicesImpl : ITurmaServices        
+    public class TurmaServicesImpl : ITurmaServices
     {
-        private IRepository<Turma> _repository; 
+        private ITurmaAlunosRepository _repositoryTurmaAlunos;
+        private IRepository<Turma> _repository;
         private readonly TurmaConverter _turmaConverter;
 
-        
-        public TurmaServicesImpl(IRepository<Turma> repository)
+        public TurmaServicesImpl(IRepository<Turma> repository, ITurmaAlunosRepository repositoryTurmaAlunos)
         {
             _repository = repository;
-            _turmaConverter = new TurmaConverter();       
+            _turmaConverter = new TurmaConverter();
+            _repositoryTurmaAlunos = repositoryTurmaAlunos;
         }
 
-        public List<TurmaDTO> FindAll() => _turmaConverter.ParseList(_repository.FindAll());
+        public List<TurmaDTO> FindAll()
+        {
+            var turmas = _repository.FindAll();
+            foreach (var turma in turmas)
+            {
+                turma.IdAlunos = _repositoryTurmaAlunos.BuscaAlunosPorTurma(turma.Id);
+            }
+            return _turmaConverter.ParseList(turmas);
+        }
 
         public int Count() => _repository.Count();
 
-        public TurmaDTO FindById(long id) => _turmaConverter.Parse(_repository.FindById(id));
+        public TurmaDTO FindById(long id)
+        {
+            var turma = _repository.FindById(id);
+            if (turma == null) return null;
+            turma.IdAlunos = _repositoryTurmaAlunos.BuscaAlunosPorTurma(id);
+            return _turmaConverter.Parse(turma);
+        }
 
         public TurmaDTO Create(TurmaDTO turma)
         {
-            var entity = _turmaConverter.Parse(turma);            
+            var entity = _turmaConverter.Parse(turma);
             entity = _repository.Create(entity);
+            if (entity.IdAlunos != null && entity.IdAlunos.Any())
+                _repositoryTurmaAlunos.AdicionaAlunos(entity.Id, entity.IdAlunos);
             return _turmaConverter.Parse(entity);
         }
 
@@ -35,9 +52,15 @@ namespace HubSchool.Services.Impl
         {
             var entity = _turmaConverter.Parse(aluno);
             entity = _repository.Update(entity);
+            if (entity.IdAlunos != null && entity.IdAlunos.Any())
+                _repositoryTurmaAlunos.AtualizaAlunos(entity.Id, entity.IdAlunos);
             return _turmaConverter.Parse(entity);
         }
 
-        public void Delete(long id) => _repository.Delete(id);
+        public void Delete(long id)
+        {
+            _repositoryTurmaAlunos.DeletaAlunosPorIdDaTurma(id);
+            _repository.Delete(id);
+        }
     }
 }

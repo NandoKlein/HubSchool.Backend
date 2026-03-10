@@ -10,11 +10,13 @@ namespace HubSchool.Controllers
     {
         private readonly IProfessorServices _professorServices;
         private readonly ILogger<ProfessorController> _logger;
+        private readonly IWebHostEnvironment _env;
 
-        public ProfessorController(ILogger<ProfessorController> logger, IProfessorServices services)
+        public ProfessorController(ILogger<ProfessorController> logger, IProfessorServices services, IWebHostEnvironment env)
         {
             _logger = logger;
             _professorServices = services;
+            _env = env;
         }
 
         [HttpGet]
@@ -96,6 +98,26 @@ namespace HubSchool.Controllers
             _professorServices.Delete(id);
             _logger.LogDebug("professor com Id {id} deletado com sucesso. ", id);
             return NoContent();
+        }
+
+        [HttpPost("{id}/foto")]
+        public async Task<IActionResult> UploadFoto(long id, IFormFile foto)
+        {
+            if (foto == null || foto.Length == 0)
+                return BadRequest("Nenhum arquivo enviado.");
+            var extensao = Path.GetExtension(foto.FileName);
+            var nomeArquivo = $"{id}{extensao}";
+            var webRoot = _env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var caminho = Path.Combine(webRoot, "uploads", "professores", nomeArquivo);
+
+            Directory.CreateDirectory(Path.GetDirectoryName(caminho));
+            using (var stream = new FileStream(caminho, FileMode.Create))
+                await foto.CopyToAsync(stream);
+
+            var url = $"/uploads/professores/{nomeArquivo}";
+            _professorServices.AtualizarFoto(id, url);
+
+            return Ok(new { url });
         }
 
 

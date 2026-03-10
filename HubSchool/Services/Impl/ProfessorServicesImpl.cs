@@ -7,10 +7,10 @@ namespace HubSchool.Services.Impl
 {
     public class ProfessorServicesImpl : IProfessorServices
     {
-        private IRepository<Professor> _repository;
+        private IAuteticadorRepository<Professor> _repository;
         private readonly ProfessorConverter _converter;
 
-        public ProfessorServicesImpl(IRepository<Professor> repository)
+        public ProfessorServicesImpl(IAuteticadorRepository<Professor> repository)
         {
             _repository = repository;
             _converter  = new ProfessorConverter();
@@ -33,13 +33,27 @@ namespace HubSchool.Services.Impl
 
         public ProfessorDTO Update(ProfessorDTO professor)
         {
-            var entity = _converter.Parse(professor);
+            var entity = _converter.Parse(professor);            
+            PreservaFotoExistente(entity);
             entity = _repository.Update(entity);
             return _converter.Parse(entity);
         }
 
         public void Delete(long id) => _repository.Delete(id);
 
-        public bool Login(string login, string senha) => _repository.Login(login, senha);
+        public ProfessorDTO Login(string login, string senha) => _converter.Parse(_repository.Login(login, senha));
+
+        public void AtualizarFoto(long id, string url) => _repository.AtualizarFoto(id, url);
+
+        public void PreservaFotoExistente(Professor entity)
+        {
+            if (entity.Foto == null)
+            {
+                var existing = _repository.FindById(entity.Id);
+                if (existing?.Foto != null)
+                    entity.Foto = existing.Foto;
+            }
+        }
+       
     }
 }

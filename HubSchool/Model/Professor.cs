@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace HubSchool.Model
 {
     [Table("professor")]
-    public class Professor : BaseEntity
+    public class Professor : AuthEntity
     {
         [Required]
         [Column("name", TypeName = "varchar(80)")]
@@ -26,7 +26,6 @@ namespace HubSchool.Model
         [Column("birthday", TypeName = "datetime2(6)")]
         public DateTime? Birthday { get; set; }
      
-
         [Required]
         [Column("phone", TypeName = "varchar(80)")]
         [MaxLength(20)]
@@ -35,5 +34,8 @@ namespace HubSchool.Model
         [Required]
         [Column("dataDaContratacao", TypeName = "datetime2(6)")]
         public DateTime? DataDaContratacao { get; set; }
+
+        [Column("foto", TypeName = "varchar(200)")]
+        public string? Foto { get; set; }
     }
 }

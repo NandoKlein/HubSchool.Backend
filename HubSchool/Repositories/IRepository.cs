@@ -11,8 +11,6 @@ namespace HubSchool.Repositories
         T Update(T item);
         void Delete(long id);
         bool Exists(long id);
-        bool Login(string login, string senha);
-
-
+        void AtualizarFoto(long id, string url);
     }
 }

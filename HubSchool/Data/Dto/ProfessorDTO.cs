@@ -11,5 +11,6 @@
         public string Email { get; set; }
         public string Phone { get; set; }
         public DateTime? DataDaContratacao { get; set; }
+        public string? Foto { get; set; }
     }
 }

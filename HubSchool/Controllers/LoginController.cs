@@ -26,15 +26,31 @@ namespace HubSchool.Controllers
         public IActionResult Login([FromBody] LoginDTO credentials)
         {
             _logger.LogInformation("Fazendo login");
-            var loginValido = _alunoService.Login(credentials.Login, credentials.Senha) 
-                || _professorService.Login(credentials.Login, credentials.Senha);
-            if (!loginValido)
+            var professorDTO = _professorService.Login(credentials.Login, credentials.Senha);
+            if (professorDTO != null)
             {
-                _logger.LogWarning("Email ou senha inválidos.");
-                return Unauthorized();
+                return Ok(new LoginResponseDTO
+                {
+                    ID = professorDTO.Id,
+                    Name = professorDTO.Name,
+                    Role = "professor",
+                    Email = professorDTO.Email
+                });
             }
-            _logger.LogInformation("Login efetuado com sucesso.");
-            return Ok();
+            var alunoDTO = _alunoService.Login(credentials.Login, credentials.Senha);                
+            if (alunoDTO != null)
+            {
+                return Ok(new LoginResponseDTO
+                {
+                    ID = alunoDTO.Id,
+                    Name = alunoDTO.Name,
+                    Role = "aluno",
+                    Email = alunoDTO.Email
+                });
+              
+            }
+            _logger.LogWarning("Email ou senha inválidos.");
+            return Unauthorized();
         }
     }
 }
