@@ -11,13 +11,16 @@ namespace HubSchool.Controllers
     {
         private readonly IAlunoServices _alunoService;
         private readonly IProfessorServices _professorService;
+        private readonly IAtendenteServices _atendenteService;
+        
         private readonly ILogger<LoginController> _logger;
 
-        public LoginController(IAlunoServices alunoService, IProfessorServices professorService, ILogger<LoginController> logger)
+        public LoginController(IAlunoServices alunoService, IProfessorServices professorService, ILogger<LoginController> logger, IAtendenteServices atendenteServices)
         {
             _alunoService = alunoService;
             _professorService = professorService;
             _logger = logger;
+            _atendenteService = atendenteServices;
         }
 
         [HttpPost]
@@ -37,15 +40,15 @@ namespace HubSchool.Controllers
                     Email = professorDTO.Email
                 });
             }
-            var alunoDTO = _alunoService.Login(credentials.Login, credentials.Senha);                
-            if (alunoDTO != null)
+            var atendenteDTO = _atendenteService.Login(credentials.Login, credentials.Senha);                
+            if (atendenteDTO != null)
             {
                 return Ok(new LoginResponseDTO
                 {
-                    ID = alunoDTO.Id,
-                    Name = alunoDTO.Name,
-                    Role = "aluno",
-                    Email = alunoDTO.Email
+                    ID = atendenteDTO.Id,
+                    Name = atendenteDTO.Name,
+                    Role = "atendente",
+                    Email = atendenteDTO.Email
                 });
               
             }

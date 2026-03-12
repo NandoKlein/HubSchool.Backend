@@ -27,5 +27,8 @@ namespace HubSchool.Model.Context
         public DbSet<Aula> Aulas { get; set; }
         public DbSet<Frequencia> Frequencias { get; set; }
         public DbSet<Homework> Homeworks { get; set; }
+        public DbSet<Atendente> Atendentes { get; set; }
+
+        
     }
 }

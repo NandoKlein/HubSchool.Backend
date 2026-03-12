@@ -68,12 +68,25 @@ namespace HubSchool.Services.Impl
             var aula = _aulaConverter.Parse(aulaDTO);
             aula = _aulaRepository.Update(aula);
             aula.Frequencias = _frequenciaRepository.AtualizaFrequencias(aula.Frequencias);
-            if(aula.Status == StatusAula.Finalizado)            
+            if (aula.Status == StatusAula.Finalizado)
+            {
                 _homeworkRepository.Create(aula);
+                CriaReposicao(aula);
+            }
             
             return _aulaConverter.Parse(aula);
-
         }
 
+        private void CriaReposicao(Aula aula)
+        {
+            var frequencias = aula.Frequencias.Where(a => a.Presenca == Presenca.Ausente).ToList();
+            if (frequencias.Any()) return;
+            aula = _aulaRepository.Create(aula);
+            foreach (var frequencia in frequencias)
+            {
+                frequencia.IdAula = aula.Id;
+            }
+            frequencias = _frequenciaRepository.Create(frequencias);
+        }
     }
 }

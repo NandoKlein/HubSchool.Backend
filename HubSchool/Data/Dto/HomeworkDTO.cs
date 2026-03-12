@@ -11,7 +11,9 @@ namespace HubSchool.Data.Dto
         public long IdAluno { get; set; }
 
         public long IdProfessor { get; set; }
-      
+
+        public long IdTurma { get; set; }
+
         public StatusHomework StatusHomework { get; set; }
        
         public long? Nota { get; set; }

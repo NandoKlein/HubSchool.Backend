@@ -25,6 +25,7 @@ builder.Services.AddScoped<IProfessorServices, ProfessorServicesImpl>();
 builder.Services.AddScoped<ITurmaServices, TurmaServicesImpl>();
 builder.Services.AddScoped<IAulaServices, AulaServicesImpl>();
 builder.Services.AddScoped<IHomeworkServices, HomeworkServicesImpl>();
+builder.Services.AddScoped<IAtendenteServices, AtendenteServicesImpl>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IAuteticadorRepository<>), typeof(AuteticadorRepository<>));

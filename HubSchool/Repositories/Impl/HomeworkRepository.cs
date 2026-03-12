@@ -38,11 +38,13 @@ namespace HubSchool.Repositories.Impl
             if (aula.Frequencias == null) return homeWorks;
             foreach (var item in aula.Frequencias)
             {
+                if (item.Presenca == Presenca.Ausente) continue;
                 homeWorks.Add(new Homework
                 {
                     IdAluno = item.IdAluno,
                     IdAula = aula.Id,
                     IdProfessor = aula.IdProfessor,
+                    IdTurma = aula.IdTurma,
                     StatusHomework = StatusHomework.PendenteParaAluno,
                     PrazoDeEntrega = DateTime.Now.AddDays(7)
                 });

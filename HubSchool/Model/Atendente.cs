@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HubSchool.Model
 {
-    [Table("professor")]
-    public class Professor : Funcionario
-    {        
+    [Table("atendente")]
+    public class Atendente : Funcionario
+    {
+        
     }
 }

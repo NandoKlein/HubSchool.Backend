@@ -20,6 +20,10 @@ namespace HubSchool.Model
         public long IdProfessor { get; set; }
 
         [Required]
+        [Column("idTurma", TypeName = "bigint")]
+        public long IdTurma { get; set; }
+
+        [Required]
         [Column("statusHomework")]
         public StatusHomework StatusHomework { get; set; }
 

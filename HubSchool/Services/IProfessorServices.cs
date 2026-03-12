@@ -9,10 +9,10 @@ namespace HubSchool.Services
         ProfessorDTO FindById(long id);
         List<ProfessorDTO> FindAll();
         int Count();
-        ProfessorDTO Update(ProfessorDTO professor);
+        ProfessorDTO Update(ProfessorDTO professorDTO);
         void Delete(long id);
         ProfessorDTO Login(string login, string senha);
         void AtualizarFoto(long id, string url);
-        void PreservaFotoExistente(Professor entity);
+        void PreservaFotoExistente(Professor professor);
     }
 }

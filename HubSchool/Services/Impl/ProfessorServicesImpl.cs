@@ -31,9 +31,9 @@ namespace HubSchool.Services.Impl
             return _converter.Parse(entity);
         }
 
-        public ProfessorDTO Update(ProfessorDTO professor)
+        public ProfessorDTO Update(ProfessorDTO professorDTO)
         {
-            var entity = _converter.Parse(professor);            
+            var entity = _converter.Parse(professorDTO);            
             PreservaFotoExistente(entity);
             entity = _repository.Update(entity);
             return _converter.Parse(entity);
@@ -45,13 +45,13 @@ namespace HubSchool.Services.Impl
 
         public void AtualizarFoto(long id, string url) => _repository.AtualizarFoto(id, url);
 
-        public void PreservaFotoExistente(Professor entity)
+        public void PreservaFotoExistente(Professor professor)
         {
-            if (entity.Foto == null)
+            if (professor.Foto == null)
             {
-                var existing = _repository.FindById(entity.Id);
+                var existing = _repository.FindById(professor.Id);
                 if (existing?.Foto != null)
-                    entity.Foto = existing.Foto;
+                    professor.Foto = existing.Foto;
             }
         }
        
